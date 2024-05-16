@@ -1,10 +1,10 @@
 import fetchWeatherData from "@/libs/fetchWeatherData";
 import { storeWeatherData } from "@/libs/storeWeatherData";
 
+export const dynamic = "force-dynamic";
 export const GET = async (request) => {
   try {
-    // const { searchParams } = new URL(request.url);
-    const searchParams = request.nextUrl.searchParams;
+    const { searchParams } = new URL(request.url);
     const latitude = searchParams.get("latitude");
     const longitude = searchParams.get("longitude");
     const name = searchParams.get("name");
