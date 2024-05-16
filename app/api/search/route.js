@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import fetchWeatherData from "@/libs/fetchWeatherData";
 import { storeWeatherData } from "@/libs/storeWeatherData";
 
@@ -38,27 +39,20 @@ export const GET = async (request) => {
       },
     };
 
-    await storeWeatherData(weatherData);
+    const res = await storeWeatherData(weatherData);
 
-    return new Response(
-      JSON.stringify({
-        message: "Weather data fetched and stored successfully",
-        error: false,
-        lat: latitude,
-        long: longitude,
-        data: weatherData,
-      }),
-      {
-        status: 200,
-      }
-    );
+    return res;
   } catch (error) {
     console.log(error);
-    return new Response(
-      JSON.stringify({ message: "Error", error: true, errorMessage: error }),
-      {
-        status: 500,
-      }
+    // return new Response(
+    //   JSON.stringify({ message: "Error", error: true, errorMessage: error }),
+    //   {
+    //     status: 500,
+    //   }
+    // );
+    return NextResponse.json(
+      { message: "Something went wrong", error: true },
+      { status: 500 }
     );
   }
 };

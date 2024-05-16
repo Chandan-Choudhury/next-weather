@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import connectDB from "@/config/database";
 import Place from "@/models/Place";
 
@@ -5,11 +6,12 @@ import Place from "@/models/Place";
  * Stores the weather data in the database.
  *
  * @param {object} weatherData - The weather data to be stored
- * @returns {string} The status of the operation in console.
+ * @returns {object} HTTP Resoponse.
  */
 export const storeWeatherData = async (weatherData) => {
+  await connectDB();
+
   try {
-    await connectDB();
     const place = await Place.findOne({ latlong: weatherData.latlong });
 
     if (place) {
@@ -17,14 +19,24 @@ export const storeWeatherData = async (weatherData) => {
         { latlong: weatherData.latlong },
         weatherData
       );
-      console.log("Weather data updated.");
+      // console.log("Weather data updated.");
+      return NextResponse.json(
+        { message: "Weather data updated." },
+        { status: 200 }
+      );
     } else {
       const newPlace = await Place(weatherData);
       await newPlace.save();
-      console.log("Weather data stored successfully.");
+      // console.log("Weather data stored successfully.");
+      return NextResponse.json(
+        { message: "Weather data stored successfully." },
+        {
+          status: 201,
+        }
+      );
     }
   } catch (error) {
-    console.error("Error storing weather data:", error);
-    throw error;
+    // console.error("Error storing weather data:", error);
+    return NextResponse.json("Something went wrong", { status: 500 });
   }
 };

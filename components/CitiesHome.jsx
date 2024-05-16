@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Loader from "./Loader";
-import { fetchAllSavedCities } from "@/libs/requests";
+// import { fetchAllSavedCities } from "@/libs/requests";
 import Searchbar from "./Searchbar";
 import CityForecast from "./CityForecast";
 import CityForecastList from "./CityForecastList";
+import apiClient from "@/libs/api";
 
 const CitiesHome = () => {
   const [cities, setCities] = useState(null);
@@ -30,7 +31,8 @@ const CitiesHome = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchAllSavedCities();
+      // const data = await fetchAllSavedCities();
+      const data = await apiClient.get("/saved-cities");
       setCities(data);
       if (updatedCity) {
         setCity(data.find((city) => city.name === updatedCity.name));

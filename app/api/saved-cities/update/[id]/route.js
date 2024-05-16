@@ -1,10 +1,11 @@
+import { NextResponse } from "next/server";
 import connectDB from "@/config/database";
 import Place from "@/models/Place";
 
 export const PATCH = async (req, { params }) => {
-  try {
-    await connectDB();
+  await connectDB();
 
+  try {
     const { id } = params;
 
     const currentDefaultCity = await Place.findOne({ isDefault: true });
@@ -23,9 +24,9 @@ export const PATCH = async (req, { params }) => {
     newDefaultCity.isDefault = true;
     await newDefaultCity.save();
 
-    return new Response(JSON.stringify(newDefaultCity), { status: 200 });
+    return NextResponse.json(newDefaultCity, { status: 200 });
   } catch (error) {
     console.log(error);
-    return new Response("Something went wrong", { status: 500 });
+    return NextResponse.json("Something went wrong", { status: 500 });
   }
 };
