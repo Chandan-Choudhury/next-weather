@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const revalidate = 0;
+
 export const metadata = {
   title: "Next Weather - by Chandan",
   description: "A weather app built with Next.js and OpenWeatherMap API",
