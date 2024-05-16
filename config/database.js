@@ -7,13 +7,15 @@ const connectDB = async () => {
     );
   }
 
-  return mongoose
-    .connect(process.env.MONGODB_URI, {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    })
-    .then(() => console.log("MongoDB connected"))
-    .catch((e) => console.error("Mongoose Client Error: " + e.message));
+    });
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("Mongoose Client Error: " + error.message);
+  }
 };
 
 export default connectDB;
