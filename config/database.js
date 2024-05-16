@@ -1,22 +1,19 @@
 import mongoose from "mongoose";
 
-let connected = false;
-
 const connectDB = async () => {
-  mongoose.set("strictQuery", true);
-
-  if (connected) {
-    console.log("MongoDB is already connected");
-    return;
+  if (!process.env.MONGODB_URI) {
+    throw new Error(
+      "Add the MONGODB_URI environment variable inside .env.local to use mongoose"
+    );
   }
 
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    connected = true;
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error("Error connecting to MongoDB: ", error);
-  }
+  return mongoose
+    .connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => console.log("MongoDB connected"))
+    .catch((e) => console.error("Mongoose Client Error: " + e.message));
 };
 
 export default connectDB;
