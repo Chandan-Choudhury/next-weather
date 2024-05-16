@@ -1,0 +1,29 @@
+@use "variables";
+
+.weather-hero {
+  background-color: variables.$primary-background-color;
+  border-radius: 0.25rem;
+  margin: 3vh auto;
+
+  h1 {
+    font-weight: bolder;
+  }
+  h3 {
+    font-weight: bold;
+    text-wrap: nowrap;
+  }
+  p {
+    font-size: variables.$p-normal;
+    color: variables.$secondary-text-color;
+  }
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: variables.$h3-mobile;
+      text-wrap: wrap;
+    }
+    h1 {
+      font-size: variables.$h1-mobile;
+    }
+  }
+}

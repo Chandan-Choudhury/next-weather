@@ -1,0 +1,11 @@
+@use "variables";
+
+.daywiseforecast-hero {
+  background-color: variables.$secondary-background-color;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,32 @@
+@use "variables";
+
+.day-wise-forecast-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: variables.$secondary-background-color;
+  margin-bottom: 10px;
+
+  h3 {
+    font-size: variables.$h3-normal;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: variables.$p-normal;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 3rem;
+  }
+}
+
+.high-low {
+  font-weight: normal;
+  color: variables.$secondary-text-color;
+  span {
+    font-weight: 700;
+    color: variables.$primary-text-color;
+  }
+}
