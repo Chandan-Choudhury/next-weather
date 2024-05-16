@@ -3,7 +3,8 @@ import { storeWeatherData } from "@/libs/storeWeatherData";
 
 export const GET = async (request) => {
   try {
-    const { searchParams } = new URL(request.url);
+    // const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const latitude = searchParams.get("latitude");
     const longitude = searchParams.get("longitude");
     const name = searchParams.get("name");
