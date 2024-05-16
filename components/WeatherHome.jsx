@@ -38,6 +38,8 @@ const WeatherHome = () => {
     fetchData();
   }, [refresh, reload]);
 
+  console.log("WeatherHome -> defaultCity", defaultCity);
+
   const refreshData = async () => {
     try {
       const latitude = defaultCity.lat;
