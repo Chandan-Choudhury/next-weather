@@ -32,11 +32,6 @@ const CitiesHome = () => {
     const fetchData = async () => {
       const data = await fetchAllSavedCities();
       setCities(data);
-      // setCity(
-      //   !city
-      //     ? data.find((city) => city.isDefault === true)
-      //     : data.find((city) => city.name === updatedCity.name)
-      // );
       if (updatedCity) {
         setCity(data.find((city) => city.name === updatedCity.name));
       } else {

@@ -4,7 +4,6 @@ import moment from "moment-timezone";
 import Image from "next/image";
 
 const HeroWeatherForecast = ({ defaultCity, length }) => {
-  console.log("HeroWeatherForecast -> defaultCity", defaultCity);
   const temperature = Math.round(defaultCity.current.temperature2m);
   const precipitation = defaultCity.daily.precipitationProbabilityMax[0];
   const weatherCode = defaultCity.current.weatherCode;
