@@ -16,6 +16,7 @@ const CitiesHome = () => {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [reload, setReload] = useState(false);
+  const [isRefreshLoading, setIsRefreshLoading] = useState(false);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -47,6 +48,7 @@ const CitiesHome = () => {
 
   const refreshData = async () => {
     try {
+      setIsRefreshLoading(true);
       const refreshCity = !city
         ? cities.find((city) => city.isDefault === true)
         : city;
@@ -63,6 +65,7 @@ const CitiesHome = () => {
         icon: "success",
         title: `Weather data updated for ${name}.`,
       });
+      setIsRefreshLoading(false);
     } catch (error) {
       console.log("error :", error);
       Toast.fire({
@@ -102,6 +105,7 @@ const CitiesHome = () => {
         <CityForecast
           city={city}
           refreshData={refreshData}
+          refreshState={isRefreshLoading}
           updateCities={updateCitiesHandler}
         />
       </div>
