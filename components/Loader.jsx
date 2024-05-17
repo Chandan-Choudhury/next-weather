@@ -1,9 +1,12 @@
-const Loader = () => {
+const Loader = ({ size }) => {
   return (
-    <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
-      <div className="spinner-border text-info" role="status">
-        {/* <span className="sr-only">Loading...</span> */}
-      </div>
+    <div
+      className={`spinner-border text-info ${
+        size === "small" ? "spinner-border-sm" : ""
+      }`}
+      role="status"
+    >
+      {/* <span className="sr-only">Loading...</span> */}
     </div>
   );
 };

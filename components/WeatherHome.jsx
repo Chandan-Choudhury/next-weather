@@ -2,13 +2,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { fetchSavedDefaultCity } from "@/libs/requests";
+// import { fetchSavedDefaultCity } from "@/libs/requests";
 import Searchbar from "@/components/Searchbar";
 import HeroWeatherForecast from "@/components/HeroWeatherForecast";
 import TodayForecast from "@/components/TodayForecast";
 import AirConditions from "@/components/AirConditions";
 import DayWiseForecast from "@/components/DayWiseForecast";
 import Loader from "./Loader";
+import apiClient from "@/libs/api";
 
 const WeatherHome = () => {
   const [defaultCity, setDefaultCity] = useState(null);
@@ -30,7 +31,8 @@ const WeatherHome = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchSavedDefaultCity();
+      // const data = await fetchSavedDefaultCity();
+      const data = await apiClient.get("/default-city");
       setDefaultCity(data);
       setLoading(false);
     };
@@ -69,7 +71,11 @@ const WeatherHome = () => {
   };
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <Loader />
+      </div>
+    );
   }
 
   return (

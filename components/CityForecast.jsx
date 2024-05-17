@@ -1,10 +1,16 @@
+"use client";
+import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import HeroWeatherForecast from "./HeroWeatherForecast";
 import DayWiseForecast from "./DayWiseForecast";
 import TodayForecast from "./TodayForecast";
+import Loader from "./Loader";
+import { set } from "mongoose";
 
 const CityForecast = ({ city, refreshData, updateCities }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const selectedCity = city;
 
   const isDefault = city.isDefault;
@@ -26,12 +32,14 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
 
   const handleDeleteCity = async (city) => {
     try {
+      setIsLoading(true);
       await axios.delete(`/api/saved-cities/delete/${city._id}`);
       updateCities();
       Toast.fire({
         icon: "success",
         title: `${city.name} deleted successfully.`,
       });
+      setIsLoading(false);
     } catch (error) {
       // console.error("Error deleting city:", error);
       Toast.fire({
@@ -43,12 +51,14 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
 
   const handleMakeDefault = async (city) => {
     try {
+      setIsLoading(true);
       await axios.patch(`/api/saved-cities/update/${city._id}`);
       updateCities();
       Toast.fire({
         icon: "success",
         title: `${city.name} is now the default city.`,
       });
+      setIsLoading(false);
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -57,6 +67,8 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
     }
   };
 
+  const loaderSize = "small";
+
   return (
     <div>
       <HeroWeatherForecast defaultCity={selectedCity} length={length} />
@@ -64,6 +76,7 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
         <button
           className="btn btn-success btn-sm py-2 px-3"
           onClick={refreshData}
+          disabled={isLoading}
         >
           Refresh
         </button>
@@ -72,13 +85,16 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
             <button
               className="btn btn-danger btn-sm py-2 px-3 ms-2"
               onClick={() => handleDeleteCity(city)}
+              disabled={isLoading}
             >
+              {/* {isLoading ? <Loader size={loaderSize} /> : "Delete"} */}
               Delete
             </button>
             <button
               className="btn btn-primary btn-sm py-2 px-3 ms-2"
               onClick={() => handleMakeDefault(city)}
             >
+              {/* {isLoading ? <Loader size={loaderSize} /> : "Default"} */}
               Default
             </button>
           </>
