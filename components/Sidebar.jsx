@@ -37,13 +37,20 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <FaMap className="sidebar-icon text-dark" />
-          <p>Map</p>
+          <Link
+            href="/map"
+            className={`${
+              pathname === "/map" ? "text-primary" : "text-dark"
+            } sidebar-link`}
+          >
+            <FaMap className="sidebar-icon" />
+            <p>Map</p>
+          </Link>
         </li>
-        <li>
+        {/* <li>
           <FaSlidersH className="sidebar-icon text-dark" />
           <p>Settings</p>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

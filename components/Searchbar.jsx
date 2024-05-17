@@ -40,7 +40,7 @@ const Searchbar = ({ updateCities }) => {
       }
       const latitude = coordinates.data.results[0].latitude;
       const longitude = coordinates.data.results[0].longitude;
-      const name = `${coordinates.data.results[0].name}, ${coordinates.data.results[0].admin1}, ${coordinates.data.results[0].country}`;
+      const name = `${coordinates.data.results[0].name}, ${coordinates.data.results[0].country}`;
       const timezone = coordinates.data.results[0].timezone;
       const response = await axios.get(
         `/api/search?latitude=${latitude}&longitude=${longitude}&name=${name}&timezone=${timezone}`
