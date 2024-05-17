@@ -6,6 +6,7 @@ import "@/styles/searchbar.scss";
 
 const Searchbar = ({ updateCities }) => {
   const [address, setAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -25,6 +26,7 @@ const Searchbar = ({ updateCities }) => {
 
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const coordinates = await axios.get(
         `https://geocoding-api.open-meteo.com/v1/search?name=${address}&count=1&language=en&format=json`
       );
@@ -49,6 +51,7 @@ const Searchbar = ({ updateCities }) => {
         title: `${response.data.message} for ${coordinates.data.results[0].name}.`,
       });
       updateCities();
+      setIsLoading(false);
     } catch (error) {
       console.log("error :", error);
       Toast.fire({
@@ -70,7 +73,7 @@ const Searchbar = ({ updateCities }) => {
       <button
         className="btn btn-primary ms-4"
         onClick={fetchData}
-        disabled={!address.trim() & (address === "")}
+        disabled={!address.trim() & (address === "") || isLoading}
       >
         Search
       </button>

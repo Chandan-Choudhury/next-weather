@@ -16,6 +16,7 @@ const WeatherHome = () => {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [reload, setReload] = useState(false);
+  const [isRefreshLoading, setIsRefreshLoading] = useState(false);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -42,6 +43,7 @@ const WeatherHome = () => {
 
   const refreshData = async () => {
     try {
+      setIsRefreshLoading(true);
       const latitude = defaultCity.lat;
       const longitude = defaultCity.long;
       const name = defaultCity.name;
@@ -54,6 +56,7 @@ const WeatherHome = () => {
         title: `Weather data updated for ${name}.`,
       });
       setRefresh((prev) => !prev);
+      setIsRefreshLoading(false);
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -84,8 +87,12 @@ const WeatherHome = () => {
         <Searchbar updateCities={updateCitiesHandler} />
         <HeroWeatherForecast defaultCity={defaultCity} length={length} />
         <span className="px-4">
-          <button className="btn btn-primary p-2" onClick={refreshData}>
-            Refresh
+          <button
+            className="btn btn-primary p-2"
+            onClick={refreshData}
+            disabled={isRefreshLoading}
+          >
+            {isRefreshLoading ? "Loading" : "Refresh"}
           </button>
         </span>
         <TodayForecast defaultCity={defaultCity} targetHours={targetHours} />

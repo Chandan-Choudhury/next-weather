@@ -5,10 +5,9 @@ import Swal from "sweetalert2";
 import HeroWeatherForecast from "./HeroWeatherForecast";
 import DayWiseForecast from "./DayWiseForecast";
 import TodayForecast from "./TodayForecast";
-import Loader from "./Loader";
-import { set } from "mongoose";
+// import Loader from "./Loader";
 
-const CityForecast = ({ city, refreshData, updateCities }) => {
+const CityForecast = ({ city, refreshData, refreshState, updateCities }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const selectedCity = city;
@@ -67,7 +66,7 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
     }
   };
 
-  const loaderSize = "small";
+  // const loaderSize = "small";
 
   return (
     <div>
@@ -76,9 +75,9 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
         <button
           className="btn btn-success btn-sm py-2 px-3"
           onClick={refreshData}
-          disabled={isLoading}
+          disabled={isLoading || refreshState}
         >
-          Refresh
+          {isLoading || refreshState ? "Loading" : "Refresh"}
         </button>
         {!isDefault && (
           <>
@@ -87,15 +86,13 @@ const CityForecast = ({ city, refreshData, updateCities }) => {
               onClick={() => handleDeleteCity(city)}
               disabled={isLoading}
             >
-              {/* {isLoading ? <Loader size={loaderSize} /> : "Delete"} */}
-              Delete
+              {isLoading ? "Loading" : "Delete"}
             </button>
             <button
               className="btn btn-primary btn-sm py-2 px-3 ms-2"
               onClick={() => handleMakeDefault(city)}
             >
-              {/* {isLoading ? <Loader size={loaderSize} /> : "Default"} */}
-              Default
+              {isLoading ? "Loading" : "Default"}
             </button>
           </>
         )}

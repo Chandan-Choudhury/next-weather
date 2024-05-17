@@ -18,7 +18,11 @@ const AirConditions = ({ defaultCity }) => {
   const columnsData = [
     { icon: FaTemperatureHalf, label: "Real Feel", value: `${realFeel}°C` },
     { icon: FaWind, label: "Wind", value: `${windSpeed} km/h` },
-    { icon: FaDroplet, label: "Precipitation", value: `${precipitation} mm` },
+    {
+      icon: FaDroplet,
+      label: "Precipitation",
+      value: `${precipitation.toFixed(2)} mm`,
+    },
     { icon: FaSun, label: "UV Index", value: uvIndexMax },
   ];
 
