@@ -10,6 +10,12 @@ export const PATCH = async (req, { params }) => {
 
     const currentDefaultCity = await Place.findOne({ isDefault: true });
 
+    if (id === currentDefaultCity._id.toString()) {
+      return NextResponse.json("This city is already set as default city", {
+        status: 400,
+      });
+    }
+
     if (currentDefaultCity) {
       currentDefaultCity.isDefault = false;
       await currentDefaultCity.save();
@@ -18,7 +24,7 @@ export const PATCH = async (req, { params }) => {
     const newDefaultCity = await Place.findById(id);
 
     if (!newDefaultCity) {
-      return new Response("City not found", { status: 404 });
+      return NextResponse.json("City not found", { status: 404 });
     }
 
     newDefaultCity.isDefault = true;
